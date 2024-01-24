@@ -1,3 +1,4 @@
+import { inferAsyncReturnType } from "@trpc/server";
 import * as trpcExpress from "@trpc/server/adapters/express";
 import express from "express";
 import { getPayloadClient } from "./get-payload";
@@ -14,6 +15,8 @@ const createContext = ({
   req,
   res,
 });
+
+export type ExpressContext = inferAsyncReturnType<typeof createContext>;
 
 const start = async () => {
   const payload = await getPayloadClient({
