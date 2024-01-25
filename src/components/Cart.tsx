@@ -1,24 +1,40 @@
 "use client";
 
+import { useCart } from "@/hooks/use-cart";
 import { formatPrice } from "@/lib/utils";
 import { ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import CartItem from "./CartItem";
 import { buttonVariants } from "./ui/button";
+import { ScrollArea } from "./ui/scroll-area";
 import { Separator } from "./ui/separator";
 import {
-    Sheet,
-    SheetContent,
-    SheetFooter,
-    SheetHeader,
-    SheetTitle,
-    SheetTrigger,
+  Sheet,
+  SheetContent,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
 } from "./ui/sheet";
 
 const Cart = () => {
-  const fee = 1;
-  const itemCount = 0;
+  const { items } = useCart();
+  const itemCount = items.length;
 
+  const [isMounted, setIsMounted] = useState<boolean>(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  const cartTotal = items.reduce(
+    (total, { product }) => total + product.price,
+    0
+  );
+
+  const fee = 1;
   return (
     <Sheet>
       <SheetTrigger className="group -m-2 flex items-center p-2">
@@ -27,18 +43,21 @@ const Cart = () => {
           aria-hidden
         />
         <span className="ml-2 font-sm font-medium text-gray-700 group-hover:text-gray-800">
-          {itemCount}
+          {isMounted ? itemCount : 0}
         </span>
       </SheetTrigger>
       <SheetContent className="flex w-full flex-col pr-0 sm:max-w-lg">
         <SheetHeader className="space-y-2.5 pr-6">
-          <SheetTitle>Cart ({itemCount})</SheetTitle>
+          <SheetTitle>Cart ({isMounted ? itemCount : 0})</SheetTitle>
         </SheetHeader>
         {itemCount > 0 ? (
           <>
             <div className="flex w-full flex-col pr-6">
-              {/* TODO: cart login */}
-              cart items
+              <ScrollArea>
+                {items.map(({ product }, i) => (
+                  <CartItem key={i} product={product} />
+                ))}
+              </ScrollArea>
             </div>
             <div className="space-y-4 pr-6">
               <Separator />
@@ -53,14 +72,14 @@ const Cart = () => {
                 </div>
                 <div className="flex">
                   <span className="flex-1">Total</span>
-                  <span>{formatPrice(fee)}</span>
+                  <span>{formatPrice(cartTotal + fee)}</span>
                 </div>
               </div>
 
               <SheetFooter>
                 <SheetTrigger asChild>
                   <Link
-                    href="/cat"
+                    href="/cart"
                     className={buttonVariants({ className: "w-full" })}
                   >
                     Continue to Checkout

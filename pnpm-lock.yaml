@@ -56,6 +56,9 @@ dependencies:
   '@trpc/server':
     specifier: ^10.43.1
     version: 10.45.0
+  '@types/body-parser':
+    specifier: ^1.19.5
+    version: 1.19.5
   '@types/nodemailer':
     specifier: ^6.4.14
     version: 6.4.14
@@ -3393,13 +3396,11 @@ packages:
     dependencies:
       '@types/connect': 3.4.38
       '@types/node': 20.11.6
-    dev: true
 
   /@types/connect@3.4.38:
     resolution: {integrity: sha512-K6uROf1LD88uDQqJCktA4yzL1YYAK6NgfsI0v/mTgyPKWsX1CnJ0XPSDhViejru1GcRkLWb8RlzFYJRqGUbaug==}
     dependencies:
       '@types/node': 20.11.6
-    dev: true
 
   /@types/eslint-scope@3.7.7:
     resolution: {integrity: sha512-MzMFlSLBqNF2gcHWO0G1vP/YQyfvrxZ0bF+u7mzUdZ1/xK4A4sru+nraZz5i3iEIk1l1uyicaDVTB4QbbEkAYg==}

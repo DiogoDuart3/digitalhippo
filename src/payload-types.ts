@@ -40,7 +40,7 @@ export interface Product {
   name: string;
   description?: string | null;
   price: number;
-  cateogry: 'ui_kits' | 'icons';
+  category: 'ui_kits' | 'icons';
   product_files?: (string | null) | ProductFile;
   approvedForSale?: ('pendign' | 'approved' | 'Denied') | null;
   priceId?: string | null;
