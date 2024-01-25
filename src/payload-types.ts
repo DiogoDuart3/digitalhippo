@@ -20,6 +20,8 @@ export interface Config {
 }
 export interface User {
   id: string;
+  products?: (string | Product)[] | null;
+  product_files?: (string | ProductFile)[] | null;
   role?: ('admin' | 'user') | null;
   updatedAt: string;
   createdAt: string;
@@ -42,7 +44,7 @@ export interface Product {
   price: number;
   category: 'ui_kits' | 'icons';
   product_files?: (string | null) | ProductFile;
-  approvedForSale?: ('pendign' | 'approved' | 'Denied') | null;
+  approvedForSale?: ('pending' | 'approved' | 'Denied') | null;
   priceId?: string | null;
   stripeId?: string | null;
   images: {

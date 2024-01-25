@@ -4,6 +4,9 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+overrides:
+  cliui: 7.0.2
+
 dependencies:
   '@hookform/resolvers':
     specifier: ^3.3.2
