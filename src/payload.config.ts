@@ -9,9 +9,22 @@ import { Orders } from "./collections/Orders";
 import { ProductFiles } from "./collections/ProductFile";
 import { Products } from "./collections/Products/Products";
 import { Users } from "./collections/Users";
+import { cloudStorage } from "@payloadcms/plugin-cloud-storage";
+import { s3Adapter } from "@payloadcms/plugin-cloud-storage/s3";
 
 dotenv.config({
   path: path.resolve(__dirname, "../.env"),
+});
+
+const adapter = s3Adapter({
+  config: {
+    credentials: {
+      accessKeyId: process.env.S3_ACCESS_KEY_ID as string,
+      secretAccessKey: process.env.S3_SECRET_ACCESS_KEY as string,
+    },
+    region: process.env.S3_REGION,
+  },
+  bucket: process.env.S3_BUCKET as string,
 });
 
 export default buildConfig({
@@ -36,6 +49,15 @@ export default buildConfig({
   db: mongooseAdapter({
     url: process.env.MONGODB_URL!,
   }),
+  plugins: [
+    cloudStorage({
+      collections: {
+        media: {
+          adapter,
+        },
+      },
+    }),
+  ],
   typescript: {
     outputFile: path.resolve(__dirname, "payload-types.ts"),
   },
