@@ -57,17 +57,7 @@ const Notifications = () => {
     };
   }, [notifications, user]);
 
-  return (
-    <div>
-      {JSON.stringify(user)}
-      <h2>Notifications</h2>
-      <ul>
-        {notifications.map((notification) => (
-          <li key={notification.id}>{notification.message}</li>
-        ))}
-      </ul>
-    </div>
-  );
+  return null;
 };
 
 export default Notifications;
