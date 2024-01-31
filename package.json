@@ -49,7 +49,7 @@
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "lucide-react": "^0.292.0",
-    "next": "14.0.1",
+    "next": "14.1.0",
     "nodemailer": "^6.9.8",
     "payload": "^2.0.15",
     "pusher": "^5.2.0",

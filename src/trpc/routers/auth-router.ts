@@ -60,7 +60,7 @@ export const authRouter = router({
       const payload = await getPayloadClient();
 
       try {
-        await payload.login({
+        const { user } = await payload.login({
           collection: "users",
           data: {
             email,
@@ -69,7 +69,7 @@ export const authRouter = router({
           res,
         });
 
-        return { sucess: true };
+        return { success: true, user };
       } catch (error) {
         throw new TRPCError({ code: "UNAUTHORIZED" });
       }

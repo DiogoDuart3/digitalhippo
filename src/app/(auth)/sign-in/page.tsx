@@ -1,6 +1,7 @@
 "use client";
 
 import { Icons } from "@/components/Icons";
+import { useAuth } from "@/components/Providers";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -18,6 +19,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 const Page = () => {
+  const { setUser } = useAuth();
   const searchParams = useSearchParams();
   const router = useRouter();
   const isSeller = searchParams.get("as") === "seller";
@@ -40,7 +42,9 @@ const Page = () => {
   });
 
   const { mutate: signIn, isLoading } = trpc.auth.signIn.useMutation({
-    onSuccess: () => {
+    onSuccess: ({ user }) => {
+      setUser(user);
+
       toast.success(`Signed in sucessfully`);
 
       router.refresh();
