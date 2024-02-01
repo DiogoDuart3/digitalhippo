@@ -42,12 +42,8 @@ const Page = () => {
   });
 
   const { mutate: signIn, isLoading } = trpc.auth.signIn.useMutation({
-    onSuccess: ({ user }) => {
-      setUser(user);
-
+    onSuccess: () => {
       toast.success(`Signed in sucessfully`);
-
-      router.refresh();
 
       if (origin) {
         return router.push(`/${origin}`);

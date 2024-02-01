@@ -4,6 +4,7 @@ import { User } from "@/payload-types";
 import { trpc } from "@/trpc/client";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink } from "@trpc/client";
+import { useRouter } from "next/navigation";
 import {
   PropsWithChildren,
   createContext,
@@ -24,6 +25,7 @@ const Context = createContext({} as AuthContext);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
+  const router = useRouter();
   const [user, setUser] = useState<User | null | undefined>();
   const fetchedMe = useRef(false);
 
@@ -46,6 +48,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       setUser(null);
 
       toast.success("Signed out successfully");
+      router.refresh();
     } catch (err) {
       toast.error("Couldn&apos;t sign out, please tyr again.");
     }
