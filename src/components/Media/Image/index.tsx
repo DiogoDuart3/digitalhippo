@@ -1,0 +1,102 @@
+"use client";
+
+import React, { useState } from "react";
+import NextImage, { StaticImageData } from "next/image";
+
+import cssVariables from "@/utilities/cssVariables";
+import { Props } from "../types";
+
+const { breakpoints } = cssVariables;
+
+export const Image: React.FC<Props> = (props) => {
+  const {
+    imgClassName,
+    onClick,
+    onLoad: onLoadFromProps,
+    sizes: sizesFromProps,
+    resource,
+    priority,
+    fill,
+    src: srcFromProps,
+    alt: altFromProps,
+    width: widthFromProps,
+    height: heightFromProps,
+  } = props;
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  let width: number | undefined | null = widthFromProps;
+  let height: number | undefined | null = heightFromProps;
+  let alt = altFromProps;
+  let src: StaticImageData | string | undefined | null = srcFromProps;
+
+  const hasDarkModeFallback = false; /*     resource?.darkModeFallback &&
+    typeof resource.darkModeFallback === "object" &&
+    resource.darkModeFallback !== null &&
+    typeof resource.darkModeFallback.filename === "string"; */
+
+  if (!src && resource && typeof resource !== "string") {
+    width = resource.width;
+    height = resource.height;
+    // alt = resource.alt;
+    alt = "";
+    src = `${process.env.NEXT_PUBLIC_CMS_URL}/media/${resource.filename}`;
+  }
+
+  // NOTE: this is used by the browser to determine which image to download at different screen sizes
+  const sizes =
+    sizesFromProps ||
+    Object.entries(breakpoints)
+      .map(([, value]) => `(max-width: ${value}px) ${value}px`)
+      .join(", ");
+
+  const baseClasses = [
+    isLoading && 'bg-red',
+    imgClassName,
+    hasDarkModeFallback && 'bg-blue',
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  return (
+    <React.Fragment>
+      <NextImage
+        src={src || ""}
+        alt={alt || ""}
+        onClick={onClick}
+        onLoad={() => {
+          setIsLoading(false);
+          if (typeof onLoadFromProps === "function") {
+            onLoadFromProps();
+          }
+        }}
+        fill={fill}
+        width={!fill ? width ?? undefined : undefined}
+        height={!fill ? height ?? undefined : undefined}
+        sizes={sizes}
+        priority={priority}
+      />
+      {hasDarkModeFallback /* &&
+        typeof resource.darkModeFallback === "object" &&
+        resource.darkModeFallback !== null */ && (
+        <NextImage
+          /* src={`${process.env.NEXT_PUBLIC_CMS_URL}/media/${resource.darkModeFallback.filename}`} */
+          src="/"
+          alt={alt || ""}
+          onClick={onClick}
+          onLoad={() => {
+            setIsLoading(false);
+            if (typeof onLoadFromProps === "function") {
+              onLoadFromProps();
+            }
+          }}
+          fill={fill}
+          width={!fill ? width ?? undefined : undefined}
+          height={!fill ? height ?? undefined : undefined}
+          sizes={sizes}
+          priority={priority}
+        />
+      )}
+    </React.Fragment>
+  );
+};

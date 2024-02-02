@@ -11,6 +11,12 @@ import { Products } from "./collections/Products/Products";
 import { Users } from "./collections/Users";
 import { cloudStorage } from "@payloadcms/plugin-cloud-storage";
 import { s3Adapter } from "@payloadcms/plugin-cloud-storage/s3";
+import { Posts } from "./collections/Posts";
+import { ReusableContent } from "./collections/ReusableContent";
+import { Pages } from "./collections/Pages";
+import { CaseStudies } from "./collections/CaseStudies";
+import richText from "./fields/richText";
+import formBuilder from '@payloadcms/plugin-form-builder'
 
 dotenv.config({
   path: path.resolve(__dirname, "../.env"),
@@ -29,7 +35,17 @@ const adapter = s3Adapter({
 
 export default buildConfig({
   serverURL: process.env.NEXT_PUBLIC_SERVER_URL || "",
-  collections: [Users, Products, Media, ProductFiles, Orders],
+  collections: [
+    Users,
+    Products,
+    Media,
+    ProductFiles,
+    Orders,
+    ReusableContent,
+    Pages,
+    Posts,
+    CaseStudies,
+  ],
   routes: {
     admin: "/sell",
   },
@@ -54,6 +70,69 @@ export default buildConfig({
       collections: {
         media: {
           adapter,
+        },
+      },
+    }),
+    formBuilder({
+      formOverrides: {
+        fields: [
+          richText(
+            {
+              name: "leader",
+              label: "Leader Text",
+            },
+            {
+              elements: [],
+            }
+          ),
+          {
+            name: "hubSpotFormID",
+            type: "text",
+            admin: {
+              position: "sidebar",
+            },
+          },
+        ],
+      },
+      formSubmissionOverrides: {
+        hooks: {
+          afterChange: [
+            ({ doc, req }) => {
+              const sendSubmissionToHubSpot = async (): Promise<void> => {
+                const { form, submissionData } = doc;
+                const portalID = process.env.PRIVATE_HUBSPOT_PORTAL_KEY;
+                const data = {
+                  fields: submissionData.map((key) => ({
+                    name: key.field,
+                    value: key.value,
+                  })),
+                  context: {
+                    hutk: req.body?.hubspotCookie,
+                    pageUri: req.body?.pageUri,
+                    pageName: req.body?.pageName,
+                  },
+                };
+                try {
+                  await fetch(
+                    `https://api.hsforms.com/submissions/v3/integration/submit/${portalID}/${form.hubSpotFormID}`,
+                    {
+                      method: "POST",
+                      headers: {
+                        "Content-Type": "application/json",
+                      },
+                      body: JSON.stringify(data),
+                    }
+                  );
+                } catch (err: unknown) {
+                  req.payload.logger.error({
+                    msg: "Fetch to HubSpot form submissions failed",
+                    err,
+                  });
+                }
+              };
+              sendSubmissionToHubSpot();
+            },
+          ],
         },
       },
     }),

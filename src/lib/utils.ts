@@ -1,6 +1,7 @@
 import { clsx, type ClassValue } from "clsx";
 import { Metadata } from "next";
 import { twMerge } from "tailwind-merge";
+import { formatPagePath } from "../utilities/formatPagePath";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));

@@ -45,8 +45,7 @@ const yourOwnAndPurchased: Access = async ({ req }) => {
 
         return typeof product.product_files === "string"
           ? product.product_files
-          : // @ts-expect-error
-            product.product_files.id;
+          : product.product_files.id;
       })
       .filter(Boolean)
       .flat();
