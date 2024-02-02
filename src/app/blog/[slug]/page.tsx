@@ -28,7 +28,7 @@ const Post = async ({ params }) => {
   if (isDraftMode || blogPost._status === "draft") {
     const nextCookies = cookies();
     const { user } = await getServerSideUser(nextCookies);
-    if (!user || !user.role === "admin") return notFound();
+    if (!user || user.role !== "admin") return notFound();
   }
 
   if (!blogPost) return notFound();
