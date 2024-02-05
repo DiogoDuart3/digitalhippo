@@ -1,19 +1,19 @@
 "use client";
 
 import * as React from "react";
-import { useCookies } from "react-cookie";
 import { usePathname } from "next/navigation";
 
 import { RichText } from "@/components/RichText";
 import { ArrowRightIcon } from "lucide-react";
 import { XIcon } from "lucide-react";
-// import type { Announcement } from '../../payload-types'
+import type { Announcement } from '../../payload-types'
+import { cookies } from "next/headers";
 
 export const Announcements: React.FC<{ announcements: Announcement[] }> = ({
   announcements,
 }) => {
+  const dismissed = cookies().get("dismissAnnouncement");
   const [closeAnnouncement, setCloseAnnouncement] = React.useState(false);
-  const [cookies, setCookie] = useCookies();
   const pathname = usePathname();
   const onDocsPage = pathname?.startsWith("/docs");
   const [showAnnouncement, setShowAnnouncement] = React.useState(false);
@@ -24,29 +24,24 @@ export const Announcements: React.FC<{ announcements: Announcement[] }> = ({
   }, [closeAnnouncement, cookies.dismissAnnouncement]);
 
   return (
-    <div
-      className={[classes.announcementWrap, onDocsPage && classes.onDocsPage]
-        .filter(Boolean)
-        .join(" ")}
-    >
+    <div>
       {showAnnouncement &&
         announcements.map((announcement, index) => {
           const { content } = announcement;
 
           return (
-            <div className={classes.announcement} key={index}>
-              <div className={classes.richText}>
+            <div key={index}>
+              <div>
                 <RichText content={content} />
-                <ArrowIcon className={classes.arrow} />
+                <ArrowRightIcon />
               </div>
               <button
                 onClick={() => {
                   setCloseAnnouncement(true);
                   setCookie("dismissAnnouncement", true, { maxAge: 34560000 }); // 400 days (max allowed by cookie)
                 }}
-                className={classes.close}
               >
-                <CloseIcon />
+                <XIcon />
               </button>
             </div>
           );

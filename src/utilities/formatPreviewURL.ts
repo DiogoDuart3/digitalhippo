@@ -8,7 +8,7 @@ dotenv.config({
 
 export const formatPreviewURL = (
   collection: string,
-  doc: any, // eslint-disable-line @typescript-eslint/no-explicit-any
+  doc: any, // eslint-disable-line
 ): string => {
   return `${
     process.env.PAYLOAD_PUBLIC_APP_URL

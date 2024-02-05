@@ -40,7 +40,7 @@ const unflattenRowsFromState = (
       rowsFromStateObject[name] = state[key]
       rowsFromStateObject[name].initialValue = rowsFromStateObject[name].value
 
-      delete remainingFlattenedState[key] // eslint-disable-line @typescript-eslint/no-dynamic-delete
+      delete remainingFlattenedState[key] // eslint-disable-line
     }
   })
 
@@ -60,7 +60,7 @@ function fieldReducer(state: Fields, action: Action): Fields {
 
     case 'REMOVE': {
       const newState = { ...state }
-      delete newState[action.path] // eslint-disable-line @typescript-eslint/no-dynamic-delete
+      delete newState[action.path] // eslint-disable-line
       return newState
     }
 

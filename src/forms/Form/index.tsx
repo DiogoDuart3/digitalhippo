@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import React, {
   ChangeEvent,
@@ -8,34 +8,34 @@ import React, {
   useReducer,
   useRef,
   useState,
-} from 'react'
+} from "react";
 
-import { Data, Field, IFormContext, InitialState, OnSubmit } from '../types'
+import { Data, Field, IFormContext, InitialState, OnSubmit } from "../types";
 import {
   FieldContext,
   FormContext,
   FormSubmittedContext,
   ModifiedContext,
   ProcessingContext,
-} from './context'
-import initialContext from './initialContext'
-import { reduceFieldsToValues } from './reduceFieldsToValues'
-import reducer from './reducer'
+} from "./context";
+import initialContext from "./initialContext";
+import { reduceFieldsToValues } from "./reduceFieldsToValues";
+import reducer from "./reducer";
 
-const defaultInitialState = {}
+const defaultInitialState = {};
 
 export type FormProps = {
-  onSubmit?: OnSubmit
-  children: React.ReactNode | ((context: IFormContext) => React.ReactNode)
-  initialState?: InitialState
-  method?: 'GET' | 'POST'
-  action?: string
-  className?: string
+  onSubmit?: OnSubmit;
+  children: React.ReactNode | ((context: IFormContext) => React.ReactNode);
+  initialState?: InitialState;
+  method?: "GET" | "POST";
+  action?: string;
+  className?: string;
   errors?: {
-    field: string
-    message: string
-  }[]
-}
+    field: string;
+    message: string;
+  }[];
+};
 
 const Form = forwardRef<HTMLFormElement, FormProps>((props, ref) => {
   const {
@@ -46,97 +46,99 @@ const Form = forwardRef<HTMLFormElement, FormProps>((props, ref) => {
     action,
     className,
     errors: errorsFromProps,
-  } = props
+  } = props;
 
-  const [fields, dispatchFields] = useReducer(reducer, initialState)
-  const [isModified, setIsModified] = useState(false)
-  const [isProcessing, setIsProcessing] = useState(false)
-  const [hasSubmitted, setHasSubmitted] = useState(false)
-  const [errorFromSubmit, setErrorFromSubmit] = useState<string>()
+  const [fields, dispatchFields] = useReducer(reducer, initialState);
+  const [isModified, setIsModified] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [hasSubmitted, setHasSubmitted] = useState(false);
+  const [errorFromSubmit, setErrorFromSubmit] = useState<string>();
 
-  const contextRef = useRef<IFormContext>(initialContext)
+  const contextRef = useRef<IFormContext>(initialContext);
 
-  contextRef.current.initialState = initialState
-  contextRef.current.fields = fields
+  contextRef.current.initialState = initialState;
+  contextRef.current.fields = fields;
 
   const handleSubmit = useCallback(
     async (e: ChangeEvent<HTMLFormElement>) => {
-      e.preventDefault()
-      e.stopPropagation()
-      setHasSubmitted(true)
-      setErrorFromSubmit(undefined)
+      e.preventDefault();
+      e.stopPropagation();
+      setHasSubmitted(true);
+      setErrorFromSubmit(undefined);
 
-      const formIsValid = contextRef.current.validateForm()
+      const formIsValid = contextRef.current.validateForm();
 
       if (formIsValid) {
-        setIsProcessing(true)
+        setIsProcessing(true);
       }
 
       if (!formIsValid) {
-        e.preventDefault()
-        setIsProcessing(false)
-        setErrorFromSubmit('Please fix the errors below and try again.')
-        return false
+        e.preventDefault();
+        setIsProcessing(false);
+        setErrorFromSubmit("Please fix the errors below and try again.");
+        return false;
       }
 
-      if (typeof onSubmit === 'function') {
+      if (typeof onSubmit === "function") {
         try {
           await onSubmit({
             data: reduceFieldsToValues(fields, false),
             unflattenedData: reduceFieldsToValues(fields, true),
             dispatchFields: contextRef.current.dispatchFields,
-          })
+          });
 
-          setHasSubmitted(false)
-          setIsModified(false)
-          setIsProcessing(false)
+          setHasSubmitted(false);
+          setIsModified(false);
+          setIsProcessing(false);
         } catch (err: unknown) {
-          const message = err instanceof Error ? err.message : 'Unknown error'
-          console.error(message) // eslint-disable-line no-console
-          setIsProcessing(false)
-          setErrorFromSubmit(message)
+          const message = err instanceof Error ? err.message : "Unknown error";
+          console.error(message); // eslint-disable-line no-console
+          setIsProcessing(false);
+          setErrorFromSubmit(message);
         }
       }
 
-      return false
+      return false;
     },
-    [onSubmit, setHasSubmitted, setIsProcessing, setIsModified, fields],
-  )
+    [onSubmit, setHasSubmitted, setIsProcessing, setIsModified, fields]
+  );
 
-  const getFields = useCallback(() => contextRef.current.fields, [contextRef])
+  const getFields = useCallback(() => contextRef.current.fields, [contextRef]);
 
   const getField = useCallback(
     (path: string): Field | undefined => {
-      return path ? contextRef.current.fields[path] : undefined
+      return path ? contextRef.current.fields[path] : undefined;
     },
-    [contextRef],
-  )
+    [contextRef]
+  );
 
   const getFormData = useCallback((): Data => {
-    return reduceFieldsToValues(contextRef.current.fields, true)
-  }, [contextRef])
+    return reduceFieldsToValues(contextRef.current.fields, true);
+  }, [contextRef]);
 
   const validateForm = useCallback((): boolean => {
-    return !Object.values(contextRef.current.fields).some((field): boolean => field.valid === false)
-  }, [contextRef])
+    return !Object.values(contextRef.current.fields).some(
+      (field): boolean => field.valid === false
+    );
+  }, [contextRef]);
 
-  contextRef.current.dispatchFields = dispatchFields
-  contextRef.current.handleSubmit = handleSubmit
-  contextRef.current.getFields = getFields
-  contextRef.current.getField = getField
-  contextRef.current.getFormData = getFormData
-  contextRef.current.validateForm = validateForm
-  contextRef.current.setIsModified = setIsModified
-  contextRef.current.setIsProcessing = setIsProcessing
-  contextRef.current.setHasSubmitted = setHasSubmitted
+  contextRef.current.dispatchFields = dispatchFields;
+  contextRef.current.handleSubmit = handleSubmit;
+  contextRef.current.getFields = getFields;
+  contextRef.current.getField = getField;
+  contextRef.current.getFormData = getFormData;
+  contextRef.current.validateForm = validateForm;
+  contextRef.current.setIsModified = setIsModified;
+  contextRef.current.setIsProcessing = setIsProcessing;
+  contextRef.current.setHasSubmitted = setHasSubmitted;
 
   useEffect(() => {
-    contextRef.current = { ...initialContext }
+    contextRef.current = { ...initialContext };
     dispatchFields({
-      type: 'RESET',
+      type: "RESET",
       payload: initialState,
-    })
-  }, [initialState])
+    });
+  }, [initialState]);
 
   return (
     <form
@@ -158,14 +160,18 @@ const Form = forwardRef<HTMLFormElement, FormProps>((props, ref) => {
           <FormSubmittedContext.Provider value={hasSubmitted}>
             <ProcessingContext.Provider value={isProcessing}>
               <ModifiedContext.Provider value={isModified}>
-                {typeof children === 'function' ? children(contextRef.current) : children}
+                {typeof children === "function"
+                  ? children(contextRef.current)
+                  : children}
               </ModifiedContext.Provider>
             </ProcessingContext.Provider>
           </FormSubmittedContext.Provider>
         </FieldContext.Provider>
       </FormContext.Provider>
     </form>
-  )
-})
+  );
+});
 
-export default Form
+Form.displayName = "Form";
+
+export default Form;

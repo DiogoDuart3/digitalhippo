@@ -1,4 +1,4 @@
 {
   "root": true,
-  "extends": ["next/core-web-vitals", "@payloadcms"]
+  "extends": ["next/core-web-vitals", "plugin:@next/next/recommended"]
 }
