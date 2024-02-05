@@ -40,7 +40,9 @@ export const Image: React.FC<Props> = (props) => {
     height = resource.height;
     // alt = resource.alt;
     alt = "";
-    src = `${process.env.NEXT_PUBLIC_CMS_URL}/media/${resource.filename}`;
+    src = `${process.env.NEXT_PUBLIC_SERVER_URL || ""}/media/${
+      resource.filename
+    }`;
   }
 
   // NOTE: this is used by the browser to determine which image to download at different screen sizes
@@ -51,52 +53,29 @@ export const Image: React.FC<Props> = (props) => {
       .join(", ");
 
   const baseClasses = [
-    isLoading && 'bg-red',
+    isLoading && "bg-red",
     imgClassName,
-    hasDarkModeFallback && 'bg-blue',
+    hasDarkModeFallback && "bg-blue",
   ]
     .filter(Boolean)
     .join(" ");
 
   return (
-    <React.Fragment>
-      <NextImage
-        src={src || ""}
-        alt={alt || ""}
-        onClick={onClick}
-        onLoad={() => {
-          setIsLoading(false);
-          if (typeof onLoadFromProps === "function") {
-            onLoadFromProps();
-          }
-        }}
-        fill={fill}
-        width={!fill ? width ?? undefined : undefined}
-        height={!fill ? height ?? undefined : undefined}
-        sizes={sizes}
-        priority={priority}
-      />
-      {hasDarkModeFallback /* &&
-        typeof resource.darkModeFallback === "object" &&
-        resource.darkModeFallback !== null */ && (
-        <NextImage
-          /* src={`${process.env.NEXT_PUBLIC_CMS_URL}/media/${resource.darkModeFallback.filename}`} */
-          src="/"
-          alt={alt || ""}
-          onClick={onClick}
-          onLoad={() => {
-            setIsLoading(false);
-            if (typeof onLoadFromProps === "function") {
-              onLoadFromProps();
-            }
-          }}
-          fill={fill}
-          width={!fill ? width ?? undefined : undefined}
-          height={!fill ? height ?? undefined : undefined}
-          sizes={sizes}
-          priority={priority}
-        />
-      )}
-    </React.Fragment>
+    <NextImage
+      src={src || ""}
+      alt={alt || ""}
+      onClick={onClick}
+      onLoad={() => {
+        setIsLoading(false);
+        if (typeof onLoadFromProps === "function") {
+          onLoadFromProps();
+        }
+      }}
+      fill={fill}
+      width={!fill ? width ?? undefined : undefined}
+      height={!fill ? height ?? undefined : undefined}
+      sizes={sizes}
+      priority={priority}
+    />
   );
 };

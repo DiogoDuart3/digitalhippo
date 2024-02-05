@@ -9,6 +9,7 @@ const Post = async ({ params }) => {
   const { slug } = params;
 
   const payload = await getPayloadClient();
+  
   const blogPost = await payload
     .find({
       collection: "posts",
@@ -17,8 +18,7 @@ const Post = async ({ params }) => {
           equals: slug,
         },
       },
-      depth: 1,
-      limit: 1,
+      depth: 2,
     })
     .then(({ docs }) => docs[0]);
 

@@ -10,7 +10,7 @@ import { Banner } from "../blocks/Banner";
 import { BlogContent } from "../blocks/BlogContent";
 import { BlogMarkdown } from "../blocks/BlogMarkdown";
 import { MediaBlock } from "../blocks/Media";
-import { ReusableContent } from "../blocks/ReusableContent";
+import { ReusableContentBlock } from "../blocks/ReusableContent";
 import { Code } from "../blocks/Code";
 
 export const Posts: CollectionConfig = {
@@ -54,7 +54,7 @@ export const Posts: CollectionConfig = {
         Code,
         BlogMarkdown,
         MediaBlock,
-        ReusableContent,
+        ReusableContentBlock,
       ],
       required: true,
     },

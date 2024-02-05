@@ -1,11 +1,13 @@
 "use client";
 
-import { BlogContent } from "@/blocks/BlogContent";
-import { RelatedPostsBlock } from "@/blocks/RelatedPosts";
+import { BlogContent } from "@/components/BlogContent";
+import { RelatedPostsBlock } from "@/components/RelatedPosts";
 import React, { Fragment } from "react";
 
 import { BlockSpacing } from "@/components/BlockSpacing";
 import { Page, ReusableContent } from "@/payload-types";
+import { toKebabCase } from "@/utilities/to-kebab-case";
+import { ReusableContentBlock } from "@/blocks/ReusableContent";
 
 type ReusableContentBlockType = Extract<
   Page["layout"][0],
@@ -15,6 +17,7 @@ type ReusableContentBlockType = Extract<
 const blockComponents = {
   /* banner: BannerBlock, */
   blogContent: BlogContent,
+  reusableContentBlock: ReusableContentBlock,
   /* blogMarkdown: BlogMarkdown,
   caseStudiesHighlight: CaseStudiesHighlightBlock,
   caseStudyCards: CaseStudyCards,
@@ -32,7 +35,6 @@ const blockComponents = {
   codeFeature: CodeFeature, */
   /* cta: CallToAction, */
   /* linkGrid: LinkGrid,
-  reusableContentBlock: ReusableContentBlock,
   pricing: Pricing,
   relatedPosts: RelatedPosts,
   exampleTabs: ExampleTabs, */
@@ -83,8 +85,7 @@ export const RenderBlocks: React.FC<Props> = (props) => {
                   top={topSpacing}
                   bottom={bottomSpacing}
                 >
-                  {/* <Block id={toKebabCase(blockName)} {...block} /> */}
-                  <div>olá</div>
+                  <Block id={toKebabCase(blockName)} {...block} />
                 </BlockSpacing>
               );
             }

@@ -16,7 +16,8 @@ import { ReusableContent } from "./collections/ReusableContent";
 import { Pages } from "./collections/Pages";
 import { CaseStudies } from "./collections/CaseStudies";
 import richText from "./fields/richText";
-import formBuilder from '@payloadcms/plugin-form-builder'
+import formBuilder from "@payloadcms/plugin-form-builder";
+import { formatPreviewURL } from "./utilities/formatPreviewURL";
 
 dotenv.config({
   path: path.resolve(__dirname, "../.env"),
@@ -56,6 +57,31 @@ export default buildConfig({
       titleSuffix: "- DigitalHippo",
       favicon: "/favicon.ico",
       ogImage: "/thumbnail.jpg",
+    },
+    livePreview: {
+      url: ({ data, documentInfo }) =>
+        `${process.env.PAYLOAD_PUBLIC_APP_URL}/live-preview/${data.slug}`,
+      collections: ["pages", "posts"],
+      breakpoints: [
+        {
+          label: "Mobile",
+          name: "mobile",
+          width: 375,
+          height: 667,
+        },
+        {
+          label: "Tablet",
+          name: "tablet",
+          width: 768,
+          height: 1024,
+        },
+        {
+          label: "Desktop",
+          name: "desktop",
+          width: 1440,
+          height: 900,
+        },
+      ],
     },
   },
   rateLimit: {

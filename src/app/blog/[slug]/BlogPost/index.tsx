@@ -33,7 +33,7 @@ export const BlogPost: React.FC<Post> = (props) => {
             <h1>{title}</h1>
           </div>
           <div className="col-span-3">
-            <AuthorsList authors={props.authors} />
+            {/* <AuthorsList authors={props.authors} /> */}
             {publishedOn && (
               <div>
                 <time dateTime={publishedOn}>
@@ -46,7 +46,7 @@ export const BlogPost: React.FC<Post> = (props) => {
         </div>
       </Gutter>
       <div>
-        {/* {typeof image !== "string" && <Media resource={image} priority />} */}
+        {typeof image !== "string" && <Media resource={image} priority />}
       </div>
       <Gutter>
         <div className="gird">
