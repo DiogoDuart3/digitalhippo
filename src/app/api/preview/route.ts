@@ -23,7 +23,7 @@ export async function GET(req: NextRequest): Promise<Response> {
   const { user } = await getServerSideUser(cookies);
   console.log("user:", user);
 
-  if (!user.id) {
+  if (!user?.id) {
     draftMode().disable();
     return new Response("You are not allowed to preview this page", {
       status: 403,

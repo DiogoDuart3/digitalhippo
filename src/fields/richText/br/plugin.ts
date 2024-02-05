@@ -1,6 +1,7 @@
 import { RichTextCustomElement } from "@payloadcms/richtext-slate"
 
-const withBr: RichTextCustomElement['plugins'][0] = incomingEditor => {
+// @ts-expect-error
+const withBr: RichTextCustomElement['plugins'][0] = (incomingEditor: any) => {
   const editor = incomingEditor
   const { isVoid } = editor
 

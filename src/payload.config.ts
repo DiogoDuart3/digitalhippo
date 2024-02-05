@@ -14,7 +14,6 @@ import { s3Adapter } from "@payloadcms/plugin-cloud-storage/s3";
 import { Posts } from "./collections/Posts";
 import { ReusableContent } from "./collections/ReusableContent";
 import { Pages } from "./collections/Pages";
-import { CaseStudies } from "./collections/CaseStudies";
 import richText from "./fields/richText";
 import formBuilder from "@payloadcms/plugin-form-builder";
 import { formatPreviewURL } from "./utilities/formatPreviewURL";
@@ -45,7 +44,6 @@ export default buildConfig({
     ReusableContent,
     Pages,
     Posts,
-    CaseStudies,
   ],
   routes: {
     admin: "/sell",
@@ -128,7 +126,7 @@ export default buildConfig({
                 const { form, submissionData } = doc;
                 const portalID = process.env.PRIVATE_HUBSPOT_PORTAL_KEY;
                 const data = {
-                  fields: submissionData.map((key) => ({
+                  fields: submissionData.map((key: any) => ({
                     name: key.field,
                     value: key.value,
                   })),

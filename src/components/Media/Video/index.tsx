@@ -4,8 +4,6 @@ import React, { useEffect, useRef } from 'react'
 
 import { Props } from '../types'
 
-
-
 export const Video: React.FC<Props> = props => {
   const { videoClassName, resource, onClick } = props
 
@@ -30,11 +28,11 @@ export const Video: React.FC<Props> = props => {
         muted
         loop
         controls={false}
-        className={[classes.video, videoClassName].filter(Boolean).join(' ')}
+        /* className={[classes.video, videoClassName].filter(Boolean).join(' ')} */
         onClick={onClick}
         ref={videoRef}
       >
-        <source src={`${process.env.NEXT_PUBLIC_CMS_URL}/media/${resource.filename}`} />
+        <source src={`${process.env.NEXT_PUBLIC_SERVER_URL}/media/${resource.filename}`} />
       </video>
     )
   }

@@ -2,8 +2,6 @@
 
 import React, { useEffect, useRef, useState } from 'react'
 
-
-
 export const LineBlip: React.FC<{
   className?: string
   active?: Boolean
@@ -68,14 +66,14 @@ export const LineBlip: React.FC<{
     <div
       ref={ref}
       className={[
-        classes.lineBlip,
+        /* classes.lineBlip,
         className,
         isHovered && classes.isHovered,
         isAnimatingIn && classes.isAnimatingIn,
         isAnimatingOut && classes.animatingOut,
         isAnimating && classes.isAnimating,
         align && classes[align],
-        blipGapSize && classes[`gap-${blipGapSize}`],
+        blipGapSize && classes[`gap-${blipGapSize}`], */
       ]
         .filter(Boolean)
         .join(' ')}

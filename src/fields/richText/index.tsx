@@ -39,6 +39,7 @@ const richText: RichText = (
       required: true,
       editor: slateEditor({
         admin: deepMerge<
+          // @ts-expect-error
           AdapterArguments["admin"],
           Partial<AdapterArguments["admin"]>
         >(

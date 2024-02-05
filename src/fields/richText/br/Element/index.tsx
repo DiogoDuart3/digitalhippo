@@ -8,7 +8,7 @@ const sourceLabels: Record<Source, string> = {
   vimeo: "Vimeo",
 };
 
-const Element = (props) => {
+const Element = (props: any) => {
   const { attributes, children, element } = props;
   const selected = useSelected();
   const focused = useFocused();

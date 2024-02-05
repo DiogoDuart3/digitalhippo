@@ -1,7 +1,13 @@
 import { getPayloadClient } from "@/get-payload";
 import { PageClient } from "./PageClient";
 
-export default async function LivePreviewPage({ params }) {
+export default async function LivePreviewPage({
+  params,
+}: {
+  params: {
+    slug: string;
+  };
+}) {
   const { slug } = params;
 
   const payload = await getPayloadClient();

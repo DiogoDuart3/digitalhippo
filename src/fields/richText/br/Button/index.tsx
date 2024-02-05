@@ -5,7 +5,7 @@ import { ReactEditor, useSlate } from 'slate-react'
 
 import Icon from '../Icon'
 
-const insertBr = editor => {
+const insertBr = (editor: any) => {
   const markdownElement = {
     type: 'br',
     children: [{ text: '' }],

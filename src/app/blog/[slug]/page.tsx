@@ -5,11 +5,17 @@ import { getPayloadClient } from "@/get-payload";
 import { getServerSideUser } from "@/lib/payload-utils";
 import { isAdmin } from "@/access/isAdmin";
 
-const Post = async ({ params }) => {
+const Post = async ({
+  params,
+}: {
+  params: {
+    slug: string;
+  };
+}) => {
   const { slug } = params;
 
   const payload = await getPayloadClient();
-  
+
   const blogPost = await payload
     .find({
       collection: "posts",

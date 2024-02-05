@@ -3,7 +3,7 @@ import { CellProps } from '@faceless-ui/css-grid/dist/Cell'
 
 import { ContentMediaCard } from '@/components/cards/ContentMediaCard'
 import { Gutter } from '@/components/Gutter'
-import { Post } from '@root/payload-types'
+import { Post } from '@/payload-types'
 
 
 
@@ -37,8 +37,8 @@ export const RelatedPosts: React.FC<RelatedPostsBlock> = props => {
 
   return (
     <Gutter>
-      <div className={classes.relatedPosts} id={id}>
-        <h4 className={classes.title}>Related Posts</h4>
+      <div id={id}>
+        <h4>Related Posts</h4>
         <Grid>
           {relatedPosts.map(
             (post, key) =>
@@ -46,7 +46,7 @@ export const RelatedPosts: React.FC<RelatedPostsBlock> = props => {
                 <Cell key={key} {...cellProps}>
                   <ContentMediaCard
                     title={post.title}
-                    description={post?.meta?.description}
+                    /* description={post?.meta?.description} */
                     href={`/blog/${post.slug}`}
                     media={post.image}
                     orientation={relatedPosts.length < 3 ? 'horizontal' : undefined}

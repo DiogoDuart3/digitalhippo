@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 
-import { CaseStudy, Page, Post } from '@/payload-types'
+import { Page, Post } from '@/payload-types'
 // eslint-disable-next-line import/no-cycle
 import { Button, ButtonProps } from '../Button'
 
@@ -20,7 +20,7 @@ type PostsReference = {
 }
 
 type CaseStudyReference = {
-  value: string | CaseStudy
+  value: string
   relationTo: (typeof relationSlugs)['case_studies']
 }
 
@@ -58,19 +58,15 @@ const generateHref = (args: GenerateSlugType): string => {
   if (type === 'reference' && reference?.value && typeof reference.value !== 'string') {
     if (reference.relationTo === 'pages') {
       const value = reference.value as Page
-      const breadcrumbs = value?.breadcrumbs
+      /* const breadcrumbs = value?.breadcrumbs
       const hasBreadcrumbs = breadcrumbs && Array.isArray(breadcrumbs) && breadcrumbs.length > 0
       if (hasBreadcrumbs) {
         return breadcrumbs[breadcrumbs.length - 1]?.url as string
-      }
+      } */
     }
 
     if (reference.relationTo === 'posts') {
       return `/blog/${reference.value.slug}`
-    }
-
-    if (reference.relationTo === 'case_studies') {
-      return `/case-studies/${reference.value.slug}`
     }
 
     return `/${reference.relationTo}/${reference.value.slug}`

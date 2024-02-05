@@ -63,20 +63,16 @@ const generateHref = (args: GenerateSlugType): string => {
   ) {
     if (reference.relationTo === "pages") {
       const value = reference.value as Page;
-      const breadcrumbs = value?.breadcrumbs;
+      /* const breadcrumbs = value?.breadcrumbs;
       const hasBreadcrumbs =
         breadcrumbs && Array.isArray(breadcrumbs) && breadcrumbs.length > 0;
       if (hasBreadcrumbs) {
         return breadcrumbs[breadcrumbs.length - 1]?.url as string;
-      }
+      } */
     }
 
     if (reference.relationTo === "posts") {
       return `/blog/${reference.value.slug}`;
-    }
-
-    if (reference.relationTo === "case_studies") {
-      return `/case-studies/${reference.value.slug}`;
     }
 
     return `/${reference.relationTo}/${reference.value.slug}`;
@@ -95,7 +91,7 @@ const ButtonContent: React.FC<ButtonProps> = (props) => {
     <div>
       {label && <div>{label}</div>}
       {Icon && label && <div />}
-      {Icon && <Icon />}
+      {/* {Icon && <Icon />} */}
     </div>
   );
 };

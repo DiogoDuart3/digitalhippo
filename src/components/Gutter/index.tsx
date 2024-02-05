@@ -1,12 +1,12 @@
-import React from "react";
+import React from 'react'
 
 type Props = {
-  children: React.ReactNode;
-  className?: string;
-  disableMobile?: boolean;
-  leftGutter?: boolean;
-  rightGutter?: boolean;
-};
+  children: React.ReactNode
+  className?: string
+  disableMobile?: boolean
+  leftGutter?: boolean
+  rightGutter?: boolean
+}
 export const Gutter: React.FC<Props> = ({
   children,
   className,
@@ -23,9 +23,9 @@ export const Gutter: React.FC<Props> = ({
         disableMobile && classes.disableMobile, */
       ]
         .filter(Boolean)
-        .join(" ")}
+        .join(' ')}
     >
       {children}
     </div>
-  );
-};
+  )
+}

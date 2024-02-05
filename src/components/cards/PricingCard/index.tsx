@@ -1,8 +1,8 @@
 import React from 'react'
-import { ArrowIcon } from '@icons/ArrowIcon'
 
 import { CMSLink } from '@/components/CMSLink'
 import { PricingCardProps } from '../types'
+import { ArrowRightIcon } from 'lucide-react'
 
 
 
@@ -15,16 +15,16 @@ export const PricingCard: React.FC<PricingCardProps> = props => {
 
   return (
     <div
-      className={[className, classes.card, !hasLink && classes.noLink].filter(Boolean).join(' ')}
+      /* className={[className, classes.card, !hasLink && classes.noLink].filter(Boolean).join(' ')} */
     >
-      <CMSLink className={classes.link} {...props.link}>
-        {leader && <span className={classes.leader}>{leader}</span>}
-        <div className={classes.content}>
-          {price && <h3 className={classes.price}>{price}</h3>}
-          {title && <h3 className={classes.title}>{title}</h3>}
-          {description && <div className={classes.description}>{description}</div>}
+      <CMSLink /* className={classes.link} */ {...props.link}>
+        {leader && <span /* className={classes.leader} */>{leader}</span>}
+        <div /* className={classes.content} */>
+          {price && <h3 /* className={classes.price} */>{price}</h3>}
+          {title && <h3 /* className={classes.title} */>{title}</h3>}
+          {description && <div /* className={classes.description} */>{description}</div>}
         </div>
-        <ArrowIcon className={classes.arrow} />
+        <ArrowRightIcon /* className={classes.arrow} */ />
       </CMSLink>
     </div>
   )

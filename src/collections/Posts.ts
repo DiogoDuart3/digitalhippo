@@ -6,12 +6,9 @@ import { revalidatePath } from "next/cache";
 import { CollectionConfig } from "payload/types";
 import { slugField } from "../fields/slug";
 import { formatPreviewURL } from "../utilities/formatPreviewURL";
-import { Banner } from "../blocks/Banner";
 import { BlogContent } from "../blocks/BlogContent";
-import { BlogMarkdown } from "../blocks/BlogMarkdown";
-import { MediaBlock } from "../blocks/Media";
 import { ReusableContentBlock } from "../blocks/ReusableContent";
-import { Code } from "../blocks/Code";
+import { ReusableContent } from "../blocks/ReusableContent copy";
 
 export const Posts: CollectionConfig = {
   slug: "posts",
@@ -48,14 +45,7 @@ export const Posts: CollectionConfig = {
     {
       name: "content",
       type: "blocks",
-      blocks: [
-        Banner,
-        BlogContent,
-        Code,
-        BlogMarkdown,
-        MediaBlock,
-        ReusableContentBlock,
-      ],
+      blocks: [BlogContent, ReusableContent],
       required: true,
     },
     {

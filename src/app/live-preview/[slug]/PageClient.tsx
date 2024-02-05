@@ -12,7 +12,7 @@ export const PageClient: React.FC<{
 }> = ({ page: initialPage }) => {
   const { data } = useLivePreview<PostType>({
     initialData: initialPage,
-    serverURL: process.env.NEXT_PUBLIC_SERVER_URL,
+    serverURL: process.env.NEXT_PUBLIC_SERVER_URL as string,
     depth: 2,
   });
 

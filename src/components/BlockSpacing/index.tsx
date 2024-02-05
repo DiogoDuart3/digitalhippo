@@ -1,7 +1,5 @@
 import React from 'react'
 
-
-
 type Props = {
   top?: boolean
   bottom?: boolean
@@ -19,9 +17,9 @@ export const BlockSpacing: React.FC<Props> = ({
 }) => {
   return (
     <div
-      className={[className, top && classes.top, bottom && classes.bottom]
+      /* className={[className, top && classes.top, bottom && classes.bottom]
         .filter(Boolean)
-        .join(' ')}
+        .join(' ')} */
       style={style}
     >
       {children}

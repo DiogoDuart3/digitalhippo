@@ -1,5 +1,5 @@
 import React from 'react'
-import { Media as MediaType } from '@types'
+import { Media as MediaType } from '@/payload-types'
 
 import { CMSLink, CMSLinkType } from '@/components/CMSLink'
 import { Media } from '@/components/Media'

@@ -2,11 +2,11 @@ import React, { Fragment } from "react";
 import escapeHTML from "escape-html";
 
 import { CMSLink, Reference } from "@/components/CMSLink";
-import { Highlight } from "../../Highlight";
-import { Label } from "../../Label";
-import { LargeBody } from "../../LargeBody";
 import { RichTextUpload } from "../Upload";
 import { Video } from "../Video";
+import { Highlight } from "@/components/Highlight";
+import { Label } from "@/components/Label";
+import { LargeBody } from "@/components/LargeBody";
 
 type Node = {
   type: string;
@@ -24,7 +24,7 @@ export type CustomRenderers = {
   [key: string]: (args: {
     node: Node;
     Serialize: SerializeFunction;
-    index;
+    index: any;
   }) => JSX.Element; // eslint-disable-line
 };
 
@@ -42,7 +42,7 @@ export const Serialize: SerializeFunction = ({ content, customRenderers }) => {
       {content?.map((node, i) => {
         if (isText(node)) {
           let text = (
-            <span dangerouslySetInnerHTML={{ __html: escapeHTML(node.text) }} />
+            <span dangerouslySetInnerHTML={{ __html: escapeHTML(node.text as string) }} />
           );
 
           if (node.bold) {

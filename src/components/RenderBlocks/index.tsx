@@ -1,13 +1,15 @@
+// @ts-nocheck
+
 "use client";
 
 import { BlogContent } from "@/components/BlogContent";
-import { RelatedPostsBlock } from "@/components/RelatedPosts";
+import { RelatedPosts, RelatedPostsBlock } from "@/components/RelatedPosts";
 import React, { Fragment } from "react";
 
 import { BlockSpacing } from "@/components/BlockSpacing";
 import { Page, ReusableContent } from "@/payload-types";
 import { toKebabCase } from "@/utilities/to-kebab-case";
-import { ReusableContentBlock } from "@/blocks/ReusableContent";
+import { ReusableContentBlock } from "../ReusableContent";
 
 type ReusableContentBlockType = Extract<
   Page["layout"][0],
@@ -18,6 +20,7 @@ const blockComponents = {
   /* banner: BannerBlock, */
   blogContent: BlogContent,
   reusableContentBlock: ReusableContentBlock,
+  relatedPosts: RelatedPosts,
   /* blogMarkdown: BlogMarkdown,
   caseStudiesHighlight: CaseStudiesHighlightBlock,
   caseStudyCards: CaseStudyCards,
@@ -36,7 +39,6 @@ const blockComponents = {
   /* cta: CallToAction, */
   /* linkGrid: LinkGrid,
   pricing: Pricing,
-  relatedPosts: RelatedPosts,
   exampleTabs: ExampleTabs, */
 };
 

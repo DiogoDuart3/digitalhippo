@@ -76,5 +76,10 @@ export const Media: CollectionConfig = {
         condition: () => false,
       },
     },
+    {
+      name: "alt",
+      type: "text",
+      required: true,
+    },
   ],
 };

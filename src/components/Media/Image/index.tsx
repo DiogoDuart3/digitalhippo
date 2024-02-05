@@ -1,14 +1,14 @@
-"use client";
+'use client'
 
-import React, { useState } from "react";
-import NextImage, { StaticImageData } from "next/image";
+import React, { useState } from 'react'
+import NextImage, { StaticImageData } from 'next/image'
 
-import cssVariables from "@/utilities/cssVariables";
-import { Props } from "../types";
+import cssVariables from '../../../utilities/cssVariables'
+import { Props } from '../types'
 
-const { breakpoints } = cssVariables;
+const { breakpoints } = cssVariables
 
-export const Image: React.FC<Props> = (props) => {
+export const Image: React.FC<Props> = props => {
   const {
     imgClassName,
     onClick,
@@ -21,28 +21,26 @@ export const Image: React.FC<Props> = (props) => {
     alt: altFromProps,
     width: widthFromProps,
     height: heightFromProps,
-  } = props;
+  } = props
 
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true)
 
-  let width: number | undefined | null = widthFromProps;
-  let height: number | undefined | null = heightFromProps;
-  let alt = altFromProps;
-  let src: StaticImageData | string | undefined | null = srcFromProps;
+  let width: number | undefined | null = widthFromProps
+  let height: number | undefined | null = heightFromProps
+  let alt = altFromProps
+  let src: StaticImageData | string | undefined | null = srcFromProps
 
-  const hasDarkModeFallback = false; /*     resource?.darkModeFallback &&
-    typeof resource.darkModeFallback === "object" &&
+  /* const hasDarkModeFallback =
+    resource?.darkModeFallback &&
+    typeof resource.darkModeFallback === 'object' &&
     resource.darkModeFallback !== null &&
-    typeof resource.darkModeFallback.filename === "string"; */
+    typeof resource.darkModeFallback.filename === 'string' */
 
-  if (!src && resource && typeof resource !== "string") {
-    width = resource.width;
-    height = resource.height;
-    // alt = resource.alt;
-    alt = "";
-    src = `${process.env.NEXT_PUBLIC_SERVER_URL || ""}/media/${
-      resource.filename
-    }`;
+  if (!src && resource && typeof resource !== 'string') {
+    width = resource.width
+    height = resource.height
+    alt = resource.alt
+    src = `${process.env.NEXT_PUBLIC_SERVER_URL}/media/${resource.filename}`
   }
 
   // NOTE: this is used by the browser to determine which image to download at different screen sizes
@@ -50,32 +48,57 @@ export const Image: React.FC<Props> = (props) => {
     sizesFromProps ||
     Object.entries(breakpoints)
       .map(([, value]) => `(max-width: ${value}px) ${value}px`)
-      .join(", ");
+      .join(', ')
 
   const baseClasses = [
-    isLoading && "bg-red",
+    /* isLoading && classes.placeholder,
+    classes.image, */
     imgClassName,
-    hasDarkModeFallback && "bg-blue",
+    /* hasDarkModeFallback && classes.hasDarkModeFallback, */
   ]
     .filter(Boolean)
-    .join(" ");
+    .join(' ')
 
   return (
-    <NextImage
-      src={src || ""}
-      alt={alt || ""}
-      onClick={onClick}
-      onLoad={() => {
-        setIsLoading(false);
-        if (typeof onLoadFromProps === "function") {
-          onLoadFromProps();
-        }
-      }}
-      fill={fill}
-      width={!fill ? width ?? undefined : undefined}
-      height={!fill ? height ?? undefined : undefined}
-      sizes={sizes}
-      priority={priority}
-    />
-  );
-};
+    <React.Fragment>
+      <NextImage
+        /* className={`${baseClasses} ${classes.themeLight}`} */
+        src={src || ''}
+        alt={alt || ''}
+        onClick={onClick}
+        onLoad={() => {
+          setIsLoading(false)
+          if (typeof onLoadFromProps === 'function') {
+            onLoadFromProps()
+          }
+        }}
+        fill={fill}
+        width={!fill ? width ?? undefined : undefined}
+        height={!fill ? height ?? undefined : undefined}
+        sizes={sizes}
+        priority={priority}
+      />
+      {/* {hasDarkModeFallback &&
+        typeof resource.darkModeFallback === 'object' &&
+        resource.darkModeFallback !== null && (
+          <NextImage
+            className={`${baseClasses} ${classes.themeDark}`}
+            src={`${process.env.NEXT_PUBLIC_CMS_URL}/media/${resource.darkModeFallback.filename}`}
+            alt={alt || ''}
+            onClick={onClick}
+            onLoad={() => {
+              setIsLoading(false)
+              if (typeof onLoadFromProps === 'function') {
+                onLoadFromProps()
+              }
+            }}
+            fill={fill}
+            width={!fill ? width ?? undefined : undefined}
+            height={!fill ? height ?? undefined : undefined}
+            sizes={sizes}
+            priority={priority}
+          />
+        )} */}
+    </React.Fragment>
+  )
+}

@@ -12,6 +12,7 @@ import {
 } from "@/lib/validators/account-credentials-validator";
 import { trpc } from "@/trpc/client";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { TRPCClientError } from "@trpc/client";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -56,8 +57,10 @@ const Page = () => {
       return router.push("/");
     },
     onError: (err) => {
-      if (err.data?.code === "UNAUTHORIZED") {
-        toast.error("Invalid email or password");
+      if (err instanceof TRPCClientError) {
+        if (err.data.code === "UNAUTHORIZED") {
+          toast.error("Invalid email or password");
+        }
       }
     },
   });
